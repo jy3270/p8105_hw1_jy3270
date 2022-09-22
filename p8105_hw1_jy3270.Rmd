@@ -1,0 +1,6 @@
+---
+title: "p8105_hw1_jy3270"
+author: "Jingya Yu"
+date: "2022-09-22"
+output: html_document
+---
