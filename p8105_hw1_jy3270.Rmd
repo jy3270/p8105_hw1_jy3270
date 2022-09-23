@@ -2,7 +2,7 @@
 title: "p8105_hw1_jy3270"
 author: "Jingya Yu"
 date: "2022-09-22"
-output: html_document
+output: github_document
 ---
 
 ## Useful library
@@ -80,5 +80,7 @@ as.numeric(problem2_df$factor_vector)
 ```
 
 The `as.numeric` function converted the `logical_vector` variable to a binary variable with only 0 and 1, which represent FALSE and TRUE, so the average number will be a number between 0 and 1.
+
 At the same time, the `factor_vector` variable was converted to 1's, 2's, and 3's representing three different levels. The values representing the levels of `factor_vector` were assigned as 'large' = 1, 'medium' = 2, 'small' = 3. Similar to the `logic_vector` variable, R convert the variable using `as.numeric` in order to make calculation and the factors were assigned alphabetically, but before the conversion R could make the computation and resulted in warning.
+
 The `character_vector` variable were failed to be converted using the `as.numeric` function, thus showing warning and introducing NA by coercion. 
