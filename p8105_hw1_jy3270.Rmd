@@ -4,3 +4,81 @@ author: "Jingya Yu"
 date: "2022-09-22"
 output: html_document
 ---
+
+## Useful library
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(ggplot2)
+```
+
+## Problem 1
+
+#### Download and load the penguins dataset
+
+```{r}
+# install.packages("palmerpenguins")
+data("penguins", package = "palmerpenguins")
+```
+
+#### Short description of the dataset
+
+```{r}
+summary(penguins)
+
+head(penguins)
+
+mean(penguins$flipper_length_mm, na.rm = TRUE)
+
+nrow(penguins)
+
+ncol(penguins)
+```
+
+### Summary of Dataset:
+The `penguin` dataset consists of `r nrow(penguins)` rows and `r ncol(penguins)` columns. The dataset reviews the species of the penguins, the island where the penguin is located, penguin's bill length (mm), bill depth(mm), flipper length (mm), body mass (g), sex, and the year the measurement was taken. There are 3 categories under `species` variable: Adelie, Chinstrap, and Gentoo, and the rangeof the variable `bill_length_mm` is`r min(penguins$bill_length_mm, na.rm = TRUE)` mm to `r max(penguins$bill_length_mm, na.rm = TRUE)` mm, and its mean is `r mean(penguins$bill_length_mm, na.rm = TRUE)` mm. At the same time, the variable `flipper_length_mm` has a range of `r min(penguins$flipper_length_mm, na.rm = TRUE)` mm to `r max(penguins$flipper_length_mm, na.rm = TRUE)` mm, its mean is `r mean(penguins$flipper_length_mm, na.rm = TRUE)` mm. The dataset has 344 rows and 8 columns in total.
+
+##### Make plot for `penguin` Dataset:
+
+```{r}
+ggplot(penguins, aes(x = bill_length_mm, y = flipper_length_mm, color = species)) + geom_point()
+ggsave("flipperlength_vs_billlength.pdf", w = 6, h = 4)
+```
+
+## Problem 2
+
+#### Create Data Frame
+```{r}
+numeric_vector = rnorm(10)
+logical_vector = numeric_vector > 0
+character_vector = c('F', 'D', 'A', 'B', 'O', 'L', 'Y', 'P', 'S', 'A')
+factor_vector = factor(c('small', 'large', 'medium', 'small', 'medium', 'large', 'large', 'small', 'medium', 'small'))
+problem2_df = tibble(
+  numeric_vector,
+  logical_vector,
+  character_vector,
+  factor_vector)
+problem2_df
+```
+
+#### Mean of variables
+```{r}
+mean(pull(.data = problem2_df, numeric_vector))
+mean(pull(.data = problem2_df, logical_vector))
+mean(pull(.data = problem2_df, character_vector))
+mean(pull(.data = problem2_df, factor_vector))
+```
+
+We can successfully compute the mean of the numeric and logical vectors but the character and factor vectors produced a warming and result in `NA` as the output.
+
+##### Using `as.numeric` to convert variable types:
+```{r, eval=FALSE}
+as.numeric(problem2_df$logical_vector)
+as.numeric(problem2_df$character_vector)
+as.numeric(problem2_df$factor_vector)
+```
+
+The `as.numeric` function converted the `logical_vector` variable to a binary variable with only 0 and 1, which represent FALSE and TRUE, so the average number will be a number between 0 and 1.
+At the same time, the `factor_vector` variable was converted to 1's, 2's, and 3's representing three different levels. The values representing the levels of `factor_vector` were assigned as 'large' = 1, 'medium' = 2, 'small' = 3. Similar to the `logic_vector` variable, R convert the variable using `as.numeric` in order to make calculation and the factors were assigned alphabetically, but before the conversion R could make the computation and resulted in warning.
+The `character_vector` variable were failed to be converted using the `as.numeric` function, thus showing warning and introducing NA by coercion. 
